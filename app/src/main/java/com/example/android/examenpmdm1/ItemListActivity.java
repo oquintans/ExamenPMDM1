@@ -1,5 +1,6 @@
 package com.example.android.examenpmdm1;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -16,11 +19,11 @@ import android.view.View;
  * lead to a {@link ItemDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
- * <p/>
+ * <p>
  * The activity makes heavy use of fragments. The list of items is a
  * {@link ItemListFragment} and the item details
  * (if present) is a {@link ItemDetailFragment}.
- * <p/>
+ * <p>
  * This activity also implements the required
  * {@link ItemListFragment.Callbacks} interface
  * to listen for item selections.
@@ -69,6 +72,21 @@ public class ItemListActivity extends AppCompatActivity
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Sobreescribimos el metodo que se ejecutara al terminar la activity lanzada con startActivityForResult()
+        if (requestCode == 1) {
+            //Codigo del intent
+            if (resultCode == Activity.RESULT_OK) {
+                //Resultado de la operacion
+                String result = data.getStringExtra("resultado");
+                Toast.makeText(ItemListActivity.this, result,
+                        Toast.LENGTH_SHORT).show();
+                //Creamos un Toast con la informacion enviada en el intent
+            }
+        }
+    }
+
     /**
      * Callback method from {@link ItemListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
@@ -92,7 +110,8 @@ public class ItemListActivity extends AppCompatActivity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
             detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
+            //Arrancamos la activity que carga al fragment con un ForResult y codigo 1 para que nos devuelva informacion
+            startActivityForResult(detailIntent, 1);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.android.examenpmdm1;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;

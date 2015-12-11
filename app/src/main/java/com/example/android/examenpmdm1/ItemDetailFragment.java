@@ -1,6 +1,7 @@
 package com.example.android.examenpmdm1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.examenpmdm1.dummy.DummyContent;
@@ -67,11 +69,14 @@ public class ItemDetailFragment extends Fragment {
                 //Metodo que se ejecutara cuando pulsemos el boton
                 ItemListFragment frag = (ItemListFragment) getFragmentManager().findFragmentById(R.id.item_list);//Recogemos el fragment de la lista
                 if (frag == null || !frag.isInLayout()) {//Si el fragment NO esta cargado en pantalla
+                    Intent intentResultado = new Intent();//Declaramos el intent
+                    intentResultado.putExtra("resultado", "Activity Cerrada");//Informacion del intent
+                    getActivity().setResult(Activity.RESULT_OK, intentResultado);//Cargamos el resultado
                     getActivity().finish();//Cerramos la activity
+
                 } else {//en caso contrario
                     ((TextView) rootView.findViewById(R.id.item_detail)).setText("");//ponemos el texto del frag item_detail en blanco
                 }
-
             }
         });//Fin del onClick
         // Show the dummy content as text in a TextView.
