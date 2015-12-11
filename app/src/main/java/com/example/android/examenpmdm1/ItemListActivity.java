@@ -36,6 +36,7 @@ public class ItemListActivity extends AppCompatActivity
      * device.
      */
     private boolean mTwoPane;
+    private boolean land;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +94,18 @@ public class ItemListActivity extends AppCompatActivity
      */
     @Override
     public void onItemSelected(String id) {
+        //Recogemos del xml config el valor del item dual_pane. Para Land es true y para los demas false
+        Boolean bool = getResources().getBoolean(R.bool.dual_pane);
+        if (bool) {
+            //Toast que se ejecutara cuando esta tumbado
+            Toast.makeText(ItemListActivity.this, "Tumbado",
+                    Toast.LENGTH_SHORT).show();
+        }
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
+
             Bundle arguments = new Bundle();
             arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
             ItemDetailFragment fragment = new ItemDetailFragment();
@@ -104,6 +113,7 @@ public class ItemListActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();
+
 
         } else {
             // In single-pane mode, simply start the detail activity
