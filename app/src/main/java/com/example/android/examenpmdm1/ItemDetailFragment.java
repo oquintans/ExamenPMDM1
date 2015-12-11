@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.examenpmdm1.dummy.DummyContent;
@@ -57,8 +58,22 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
+        Button button = (Button) rootView.findViewById(R.id.button);//Recogemos el boton del fragment
+        button.setOnClickListener(new View.OnClickListener() {//Enlazamos el onClickListener
+            @Override
+            public void onClick(View v) {
+                //Metodo que se ejecutara cuando pulsemos el boton
+                ItemListFragment frag = (ItemListFragment) getFragmentManager().findFragmentById(R.id.item_list);//Recogemos el fragment de la lista
+                if (frag == null || !frag.isInLayout()) {//Si el fragment NO esta cargado en pantalla
+                    getActivity().finish();//Cerramos la activity
+                } else {//en caso contrario
+                    ((TextView) rootView.findViewById(R.id.item_detail)).setText("");//ponemos el texto del frag item_detail en blanco
+                }
+
+            }
+        });//Fin del onClick
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
